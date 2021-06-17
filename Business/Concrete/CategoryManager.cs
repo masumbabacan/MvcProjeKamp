@@ -41,7 +41,7 @@ namespace Business.Concrete
 
         public void Update(Category category)
         {
-            throw new NotImplementedException();
+            _categoryDal.Update(category);
         }
     }
 }
