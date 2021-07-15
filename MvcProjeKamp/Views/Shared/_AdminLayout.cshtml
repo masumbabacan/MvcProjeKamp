@@ -6,17 +6,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>AdminLTE 3 | Dashboard 3</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/fontawesome-free/css/all.min.css">
     <!-- IonIcons -->
+
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/summernote/summernote-bs4.css">
     <!-- Theme style -->
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="~/AdminLTE-3.0.4/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -60,7 +61,9 @@ to get the desired effect
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
+                         with font-awesome or any other icon font library -->
+                        @if (User.IsInRole("A"))
+                        {
                         <li class="nav-item has-treeview">
                             <a href="/AdminCategory/Index/" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -69,6 +72,7 @@ to get the desired effect
                                 </p>
                             </a>
                         </li>
+                        }
                         <li class="nav-item">
                             <a href="/Heading/Index/" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -115,7 +119,7 @@ to get the desired effect
                             </ul>
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
+                            <a href="/About/Index/" class="nav-link">
                                 <i class="nav-icon fas fa-tree"></i>
                                 <p>
                                     Hakkımızda
@@ -123,7 +127,7 @@ to get the desired effect
                             </a>
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
+                            <a href="/Contact/Index/" class="nav-link">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     İletişim & Mesajlar
@@ -139,7 +143,7 @@ to get the desired effect
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/calendar.html" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-calendar-alt"></i>
                                 <p>
                                     Yetkilendirmeler
@@ -147,7 +151,7 @@ to get the desired effect
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/gallery.html" class="nav-link">
+                            <a href="/Gallery/Index/" class="nav-link">
                                 <i class="nav-icon far fa-image"></i>
                                 <p>
                                     Galeri
@@ -155,7 +159,7 @@ to get the desired effect
                             </a>
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
+                            <a href="/ErrorPage/Page404" class="nav-link">
                                 <i class="nav-icon far fa-envelope"></i>
                                 <p>
                                     Hata Sayfaları
@@ -163,10 +167,10 @@ to get the desired effect
                             </a>
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
+                            <a href="/Ability/Index/" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Siteye Git
+                                    Yeteneklerim
                                 </p>
                             </a>
                         </li>
@@ -185,7 +189,32 @@ to get the desired effect
             </div>
             <!-- /.sidebar -->
         </aside>
-        
+
+        <!-- REQUIRED SCRIPTS -->
+        <!-- jQuery -->
+        <script src="~/AdminLTE-3.0.4/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="~/AdminLTE-3.0.4/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE -->
+        <script src="~/AdminLTE-3.0.4/dist/js/adminlte.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/AdminLTE-3.0.4/dist/js/adminlte.min.js"></script>
+        <!--icheck-mailbox-->
+        <script src="~/AdminLTE-3.0.4/plugins/icheck-bootstrap/icheck-mailbox.js"></script>
+        <!-- OPTIONAL SCRIPTS -->
+        <script src="~/AdminLTE-3.0.4/plugins/chart.js/Chart.min.js"></script>
+        <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
+        <script src="~/AdminLTE-3.0.4/dist/js/pages/dashboard3.js"></script>
+        <!-- Summernote -->
+        <script src="~/AdminLTE-3.0.4/plugins/summernote/summernote-bs4.min.js"></script>
+        <!-- Page Script -->
+        <script>
+            $(function () {
+                //Add text editor
+                $('#compose-textarea').summernote()
+            })
+        </script>
+
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="content">
@@ -194,20 +223,8 @@ to get the desired effect
             </div>
             <!-- /.content -->
         </div>
-     
     </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <script src="~/AdminLTE-3.0.4/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/AdminLTE-3.0.4/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="~/AdminLTE-3.0.4/dist/js/adminlte.js"></script>
 
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="~/AdminLTE-3.0.4/plugins/chart.js/Chart.min.js"></script>
-    <script src="~/AdminLTE-3.0.4/dist/js/demo.js"></script>
-    <script src="~/AdminLTE-3.0.4/dist/js/pages/dashboard3.js"></script>
+
 </body>
 </html>

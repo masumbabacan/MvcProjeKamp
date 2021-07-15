@@ -1,37 +1,46 @@
-﻿
+﻿@using Entites.Concrete
+@model List<About>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<h2>Hakkımda Veri Listesi</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Hakkımda başlığı</th>
+        <th>Durum</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.AboutId</td>
+            <td>Hakkımda başlığı</td>
 
-<button class="btn btn-primary" data-toggle="modal" data-target="#Modal1">
-    Yeni Hakkımızda Girişi
-</button>
+            <td>
+                <a href="/About/Delete/@item.AboutId">
 
-<div class="modal" id="Modal1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Hakkımızda Metin Girişi</h5>
-            </div>
-            <form method="post" action="#">
-                <div class="modal-body">
-                    <label>Hakkımda Metin 1</label>
-                    <input type="text" name="#" class="form-control" />
-                    <br />
-                    <label>Hakkımda Metin 2</label>
-                    <input type="text" name="#" class="form-control" />
-                    <br />
-                    <label>Hakkımda görsel 2</label>
-                    <input type="text" name="#" class="form-control" />
-                    <br />
-                    <label>Hakkımda görsel 2</label>
-                    <input type="text" name="#" class="form-control" />
-                    <br />
-                    <button style="margin-left:394px" class="btn btn-info">Kaydet</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                    @if (item.Status == true)
+                    {
+                        <span class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash">
+                            </i> Pasif Yap
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="btn btn-success btn-sm">
+                            <i class="fas fa-check-square">
+                            </i> Aktif Yap
+                        </span>
+                    }
+                </a>
+            </td>
+            
+        </tr>
+    }
+</table>
+
+@Html.Action("AboutPartial","About")

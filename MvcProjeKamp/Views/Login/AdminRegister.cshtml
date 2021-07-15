@@ -1,0 +1,31 @@
+﻿@model Entites.Concrete.Admin
+@{
+    ViewBag.Title = "AdminRegister";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AdminRegister</h2>
+
+@using (Html.BeginForm("AdminRegister", "Login", FormMethod.Post))
+{
+
+<div class="form-group">
+    @Html.Label("Admin Adı")
+    @Html.TextBoxFor(c => c.AdminFirstName, new { @class = "form-control" })
+    <br />
+    @Html.Label("Admin Soyadı")
+    @Html.TextBoxFor(c => c.AdminLastName, new { @class = "form-control" })
+    <br />
+    @Html.Label("Email")
+    @Html.TextBoxFor(c => c.AdminUserName, new { @class = "form-control" })
+    <br />
+    @Html.Label("Şifre")
+    @Html.TextBoxFor(c => c.AdminPassword, new { @class = "form-control" })
+    <br />
+    @Html.Label("Rol")
+    @Html.TextBoxFor(c => c.AdminRole, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info">Kaydet</button>
+</div>
+
+}

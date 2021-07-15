@@ -12,6 +12,8 @@ namespace MvcProjeKamp.Controllers
     {
         // GET: Content
         ContentManager contentManager = new ContentManager(new EfContentDal());
+
+        [Authorize]
         public ActionResult Index()
         {
             return View();
