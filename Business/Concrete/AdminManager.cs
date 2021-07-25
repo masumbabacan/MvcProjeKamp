@@ -23,7 +23,7 @@ namespace Business.Concrete
 
         public void Add(Admin admin)
         {
-            admin.AdminPassword = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(admin.AdminPassword)));
+            //admin.AdminPassword = Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(admin.AdminPassword)));
             _adminDal.Insert(admin);
         }
 

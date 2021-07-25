@@ -18,27 +18,27 @@ namespace MvcProjeKamp.Controllers
         MessageValidator validationRules = new MessageValidator();
 
         [Authorize]
-        public ActionResult Inbox()
+        public ActionResult Inbox(string p)
         {
-            var messageList = messageManager.GetAllInbox();
+            var messageList = messageManager.GetAllInbox(p);
             return View(messageList);
         }
 
-        public ActionResult Sendbox()
+        public ActionResult Sendbox(string p)
         {
-            var messageList = messageManager.GetAllSendbox();
+            var messageList = messageManager.GetAllSendbox(p);
             return View(messageList);
         }
 
-        public ActionResult UnreadMessages()
+        public ActionResult UnreadMessages(string p)
         {
-            var messageList = messageManager.GetAllUnReadMessageList();
+            var messageList = messageManager.GetAllUnReadMessageList(p);
             return View(messageList);
         }
 
-        public ActionResult DeletedMessageList()
+        public ActionResult DeletedMessageList(string p)
         {
-            var messageList = messageManager.DeletedMessageList();
+            var messageList = messageManager.DeletedMessageList(p);
             return View(messageList);
         }
 
@@ -97,6 +97,22 @@ namespace MvcProjeKamp.Controllers
             return RedirectToAction("Inbox");
         }
 
+        public ActionResult UnReadMessage(int id)
+        {
+
+            var messageValue = messageManager.GetById(id);
+            if (messageValue.MessageRead == true)
+            {
+                messageValue.MessageRead = false;
+            }
+            else
+            {
+                messageValue.MessageRead = true;
+            }
+            messageManager.Update(messageValue);
+            return RedirectToAction("UnreadMessages");
+        }
+
         public ActionResult DeleteMessage(int id)
         {
 
@@ -111,6 +127,22 @@ namespace MvcProjeKamp.Controllers
             }
             messageManager.Update(messageValue);
             return RedirectToAction("Inbox");
+        }
+
+        public ActionResult DeletedMessage(int id)
+        {
+
+            var messageValue = messageManager.GetById(id);
+            if (messageValue.Status == true)
+            {
+                messageValue.Status = false;
+            }
+            else
+            {
+                messageValue.Status = true;
+            }
+            messageManager.Update(messageValue);
+            return RedirectToAction("DeletedMessageList");
         }
     }
 }

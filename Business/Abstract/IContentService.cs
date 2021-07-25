@@ -9,7 +9,9 @@ namespace Business.Abstract
 {
     public interface IContentService
     {
-        List<Content> GetAll();
+        List<Content> GetAll(string p);
+        List<Content> GetAllList();
+        List<Content> GetAllByWriter(int id);
 
         List<Content> GetAllByHeadingId(int id);
 

@@ -13,10 +13,12 @@ using System.Text;
 
 namespace MvcProjeKamp.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
-        AuthManager authManager = new AuthManager(new EfAdminDal());
+        AuthManager authManager = new AuthManager(new EfAdminDal(),new EfWriterDal());
         AdminManager adminManager = new AdminManager(new EfAdminDal());
+        WriterManager writerManager = new WriterManager(new EfWriterDal());
         SHA1 sha = new SHA1CryptoServiceProvider();
 
         // GET: Login
@@ -44,7 +46,6 @@ namespace MvcProjeKamp.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult AdminRegister()
         {
@@ -57,5 +58,59 @@ namespace MvcProjeKamp.Controllers
             adminManager.Add(admin);
             return RedirectToAction("Index");
         }
+
+
+        //--------------------------------------------------------------------------------------------//
+        //WRİTER
+
+
+        [HttpGet]
+        public ActionResult WriterLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult WriterLogin(Writer writer)
+        {
+
+            var result = authManager.GetWriter(writer.WriterMail, writer.WriterPassword);
+            if (result != null)
+            {
+                FormsAuthentication.SetAuthCookie(result.WriterMail, false);
+                Session["WriterMail"] = result.WriterMail;
+                return RedirectToAction("MyContent", "WriterPanelContent");
+            }
+            else
+            {
+                return RedirectToAction("HomePage","Home");
+            }
+        }
+
+        public ActionResult SuccessRegister()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult WriterRegister()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult WriterRegister(Writer writer)
+        {
+            writerManager.Add(writer);
+            return RedirectToAction("SuccessRegister", "Login");
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("HomePage", "Home");
+        }
+
     }
 }

@@ -10,6 +10,8 @@ namespace Business.Abstract
     public interface IAuthService
     {
         Admin GetAdmin(string userName,string password);
+
+        Writer GetWriter(string userName, string password);
     }
 }
 

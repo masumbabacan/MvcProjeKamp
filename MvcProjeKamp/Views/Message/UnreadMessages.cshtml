@@ -89,7 +89,7 @@
                                             </td>
                                             <td> @(((DateTime)item.MessageDate).ToString("dd-MMM-yyyy"))</td>
                                             <td>
-                                                <a href="/Message/ReadMessage/@item.MessageId">
+                                                <a href="/Message/UnReadMessage/@item.MessageId">
 
                                                     @if (item.MessageRead == true)
                                                     {

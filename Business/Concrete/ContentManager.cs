@@ -28,14 +28,24 @@ namespace Business.Concrete
             _contentDal.Delete(content);
         }
 
-        public List<Content> GetAll()
+        public List<Content> GetAll(string p)
         {
-            return _contentDal.List();
+            return _contentDal.List(x=>x.ContentValue.Contains(p));
         }
 
         public List<Content> GetAllByHeadingId(int id)
         {
             return _contentDal.List(c => c.HeadingId == id);
+        }
+
+        public List<Content> GetAllByWriter(int id)
+        {
+            return _contentDal.List(x => x.WriterId == id);
+        }
+
+        public List<Content> GetAllList()
+        {
+            return _contentDal.List();
         }
 
         public Content GetById(int id)

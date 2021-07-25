@@ -9,10 +9,10 @@ namespace Business.Abstract
 {
     public interface IMessageService
     {
-        List<Message> GetAllInbox();
-        List<Message> GetAllUnReadMessageList();
-        List<Message> DeletedMessageList();
-        List<Message> GetAllSendbox();
+        List<Message> GetAllInbox(string p);
+        List<Message> GetAllUnReadMessageList(string p);
+        List<Message> DeletedMessageList(string p);
+        List<Message> GetAllSendbox(string p);
 
         Message GetById(int id);
 

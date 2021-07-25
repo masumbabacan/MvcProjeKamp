@@ -12,15 +12,22 @@ namespace Business.Concrete
     public class AuthManager : IAuthService
     {
         IAdminDal _adminDal;
+        IWriterDal _writerDal;
 
-        public AuthManager(IAdminDal adminDal)
+        public AuthManager(IAdminDal adminDal, IWriterDal writerDal)
         {
             _adminDal = adminDal;
+            _writerDal = writerDal;
         }
 
         public Admin GetAdmin(string userName, string password)
         {
             return _adminDal.Get(x => x.AdminUserName == userName && x.AdminPassword == password);
+        }
+
+        public Writer GetWriter(string userName, string password)
+        {
+            return _writerDal.Get(x => x.WriterMail == userName && x.WriterPassword == password);
         }
     }
 }

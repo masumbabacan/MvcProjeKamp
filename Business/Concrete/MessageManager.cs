@@ -28,24 +28,24 @@ namespace Business.Concrete
             _messageDal.Delete(message);
         }
 
-        public List<Message> DeletedMessageList()
+        public List<Message> DeletedMessageList(string p)
         {
-            return _messageDal.List(m => m.ReceiverMail == "admin@gmail.com" && m.Status == false);
+            return _messageDal.List(m => m.ReceiverMail == p && m.Status == false);
         }
 
-        public List<Message> GetAllInbox()
+        public List<Message> GetAllInbox(string p)
         {
-            return _messageDal.List(m=>m.ReceiverMail=="admin@gmail.com" && m.MessageRead == true && m.Status == true);
+            return _messageDal.List(m=>m.ReceiverMail== p && m.MessageRead == true && m.Status == true);
         }
 
-        public List<Message> GetAllSendbox()
+        public List<Message> GetAllSendbox(string p)
         {
-            return _messageDal.List(m => m.SenderMail == "admin@gmail.com");
+            return _messageDal.List(m => m.SenderMail ==p);
         }
 
-        public List<Message> GetAllUnReadMessageList()
+        public List<Message> GetAllUnReadMessageList(string p)
         {
-            return _messageDal.List(m => m.ReceiverMail == "admin@gmail.com" && m.MessageRead == false);
+            return _messageDal.List(m => m.ReceiverMail == p && m.MessageRead == false);
         }
 
         public Message GetById(int id)

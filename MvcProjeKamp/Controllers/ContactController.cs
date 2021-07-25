@@ -1,6 +1,8 @@
 ﻿using Business.Concrete;
 using Business.ValidationRules.FluentValidation;
 using DataAccess.EntityFramework;
+using Entites.Concrete;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,22 +29,38 @@ namespace MvcProjeKamp.Controllers
             return View(contactValues);
         }
 
+        [HttpGet]
+        public ActionResult ContactAdd()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ContactAdd(Contact contact)
+        {
+            contact.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            contactManager.Add(contact);
+            return RedirectToAction("HomePage", "Home");
+        }
+
+
+
         public PartialViewResult MessageListMenu()
         {
-            var contact = contactManager.GetAll().Count();
-            ViewBag.contact = contact;
+            //var contact = contactManager.GetAll().Count();
+            //ViewBag.contact = contact;
 
-            var incomingMessages = messageManager.GetAllInbox().Count();
-            ViewBag.incomingMessages = incomingMessages;
+            //var incomingMessages = messageManager.GetAllInbox().Count();
+            //ViewBag.incomingMessages = incomingMessages;
 
-            var sendMessage = messageManager.GetAllSendbox().Count();
-            ViewBag.sendMessage = sendMessage;
+            //var sendMessage = messageManager.GetAllSendbox().Count();
+            //ViewBag.sendMessage = sendMessage;
 
-            var unreadMessage = messageManager.GetAllUnReadMessageList().Count();
-            ViewBag.unreadMessage = unreadMessage;
+            //var unreadMessage = messageManager.GetAllUnReadMessageList().Count();
+            //ViewBag.unreadMessage = unreadMessage;
 
-            var deletedMessage = messageManager.DeletedMessageList().Count();
-            ViewBag.deletedMessage = deletedMessage;
+            //var deletedMessage = messageManager.DeletedMessageList().Count();
+            //ViewBag.deletedMessage = deletedMessage;
 
             return PartialView();
         }
