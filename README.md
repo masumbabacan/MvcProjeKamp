@@ -8,7 +8,7 @@
 ![mvc6](https://user-images.githubusercontent.com/78920463/126897470-46f592b4-6950-437e-bb3b-d57dfb179d89.png)
 ![mvc7](https://user-images.githubusercontent.com/78920463/126897472-fada54f3-4b59-4b83-8033-61247f63c731.png)
 ![mvc8](https://user-images.githubusercontent.com/78920463/126897473-52c57810-3f09-47b2-a06b-671013b80d1c.png)
-![mvc4](https://user-images.githubusercontent.com/78920463/126897488-0c472827-55d7-49ae-9a2d-17721fe00c34.png)
+![YETENEK](https://user-images.githubusercontent.com/78920463/126897692-26971130-1577-4690-a4b3-cbfee292ed0e.png)
 ![mvc5](https://user-images.githubusercontent.com/78920463/126897493-c90134e0-c792-4ea0-a206-10f2504d8c74.png)
 ![mvc6](https://user-images.githubusercontent.com/78920463/126897496-2070f45a-70bc-44bb-b7df-c2befc0a6af0.png)
 ![mvc7](https://user-images.githubusercontent.com/78920463/126897500-ac466513-8dcc-4583-bc0e-9bc0b79ff1a3.png)
