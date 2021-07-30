@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -10,19 +11,27 @@ namespace MvcProjeKamp.Controllers
 {
     public class DefaultController : Controller
     {
-        HeadingManager headingManager = new HeadingManager(new EfHeadingDal());
-        ContentManager contentManager = new ContentManager(new EfContentDal());
+       // HeadingManager headingManager = new HeadingManager(new EfHeadingDal());
+       // ContentManager contentManager = new ContentManager(new EfContentDal());
+
+        IContentService _contentService;
+        IHeadingService _headingService;
+        public DefaultController(IContentService contentService, IHeadingService headingService)
+        {
+            _contentService = contentService;
+            _headingService = headingService;
+        }
 
         [AllowAnonymous]
         public ActionResult Headings()
         {
-            var result = headingManager.GetAll();
+            var result = _headingService.GetAll();
             return View(result);
         }
         [AllowAnonymous]
         public PartialViewResult Index(int id = 0)
         {
-            var result = contentManager.GetAllByHeadingId(id);
+            var result = _contentService.GetAllByHeadingId(id);
             return PartialView(result);
         }
     }

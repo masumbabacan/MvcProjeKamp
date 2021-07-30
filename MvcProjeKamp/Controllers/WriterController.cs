@@ -8,16 +8,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Business.Abstract;
 
 namespace MvcProjeKamp.Controllers
 {
     public class WriterController : Controller
     {
-        WriterManager writerManager = new WriterManager(new EfWriterDal());
+        //WriterManager writerManager = new WriterManager(new EfWriterDal());
         WriterValidator writerValidator = new WriterValidator();
+
+        IWriterService _writerService;
+
+        public WriterController(IWriterService writerService)
+        {
+            _writerService = writerService;
+        }
+
         public ActionResult Index()
         {
-            var writervalues = writerManager.GetAll();
+            var writervalues = _writerService.GetAll();
             return View(writervalues);
         }
 
@@ -34,7 +43,7 @@ namespace MvcProjeKamp.Controllers
             ValidationResult results = writerValidator.Validate(writer);
             if (results.IsValid)
             {
-                writerManager.Add(writer);
+                _writerService.Add(writer);
                 return RedirectToAction("Index");
             }
             else
@@ -51,7 +60,7 @@ namespace MvcProjeKamp.Controllers
         public ActionResult EditWriter(int id)
         {
 
-            var writervalue = writerManager.GetById(id);
+            var writervalue = _writerService.GetById(id);
             return View(writervalue);
         }
 
@@ -61,7 +70,7 @@ namespace MvcProjeKamp.Controllers
             ValidationResult results = writerValidator.Validate(writer);
             if (results.IsValid)
             {
-                writerManager.Update(writer);
+                _writerService.Update(writer);
                 return RedirectToAction("Index");
             }
             else

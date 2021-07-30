@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using Business.ValidationRules.FluentValidation;
 using DataAccess.EntityFramework;
 using Entites.Concrete;
@@ -14,18 +15,26 @@ namespace MvcProjeKamp.Controllers
     public class ContactController : Controller
     {
         // GET: Contact
-        ContactManager contactManager = new ContactManager(new EfContactDal());
-        MessageManager messageManager = new MessageManager(new EfMessageDal());
+        //ContactManager contactManager = new ContactManager(new EfContactDal());
+        //MessageManager messageManager = new MessageManager(new EfMessageDal());
         ContactValidator validationRules = new ContactValidator();
+
+        IContactService _contactService;
+
+        public ContactController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+
         public ActionResult Index()
         {
-            var contactValues = contactManager.GetAll();
+            var contactValues = _contactService.GetAll();
             return View(contactValues);
         }
 
         public ActionResult GetContactDetails(int id)
         {
-            var contactValues = contactManager.GetById(id);
+            var contactValues = _contactService.GetById(id);
             return View(contactValues);
         }
 
@@ -39,7 +48,7 @@ namespace MvcProjeKamp.Controllers
         public ActionResult ContactAdd(Contact contact)
         {
             contact.ContactDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-            contactManager.Add(contact);
+            _contactService.Add(contact);
             return RedirectToAction("HomePage", "Home");
         }
 

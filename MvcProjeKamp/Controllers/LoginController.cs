@@ -10,18 +10,26 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Security.Cryptography;
 using System.Text;
-
+using Business.Abstract;
 namespace MvcProjeKamp.Controllers
 {
     [AllowAnonymous]
     public class LoginController : Controller
     {
         AuthManager authManager = new AuthManager(new EfAdminDal(),new EfWriterDal());
-        AdminManager adminManager = new AdminManager(new EfAdminDal());
-        WriterManager writerManager = new WriterManager(new EfWriterDal());
+        //AdminManager adminManager = new AdminManager(new EfAdminDal());
+        //WriterManager writerManager = new WriterManager(new EfWriterDal());
         SHA1 sha = new SHA1CryptoServiceProvider();
 
-        // GET: Login
+        IAdminService _adminService;
+        IWriterService _writerService;
+
+        public LoginController( IAdminService adminService, IWriterService writerService)
+        {
+            _adminService = adminService;
+            _writerService = writerService;
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -55,7 +63,7 @@ namespace MvcProjeKamp.Controllers
         [HttpPost]
         public ActionResult AdminRegister(Admin admin)
         {
-            adminManager.Add(admin);
+            _adminService.Add(admin);
             return RedirectToAction("Index");
         }
 
@@ -101,7 +109,7 @@ namespace MvcProjeKamp.Controllers
         [HttpPost]
         public ActionResult WriterRegister(Writer writer)
         {
-            writerManager.Add(writer);
+            _writerService.Add(writer);
             return RedirectToAction("SuccessRegister", "Login");
         }
 

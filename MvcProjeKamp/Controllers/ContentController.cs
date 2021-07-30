@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.Concrete;
 using DataAccess.EntityFramework;
 using System;
@@ -12,7 +13,14 @@ namespace MvcProjeKamp.Controllers
     public class ContentController : Controller
     {
         // GET: Content
-        ContentManager contentManager = new ContentManager(new EfContentDal());
+        //ContentManager contentManager = new ContentManager(new EfContentDal());
+
+        IContentService _contentService;
+
+        public ContentController(IContentService contentService)
+        {
+            _contentService = contentService;
+        }
 
         [Authorize]
         public ActionResult Index()
@@ -22,8 +30,8 @@ namespace MvcProjeKamp.Controllers
 
         public ActionResult GetAllContent(string p)
         {
-            var getAllList = contentManager.GetAllList();
-            var result = contentManager.GetAll(p);
+            var getAllList = _contentService.GetAllList();
+            var result = _contentService.GetAll(p);
             if (result == null)
             {
                 return View(getAllList);
@@ -33,7 +41,7 @@ namespace MvcProjeKamp.Controllers
 
         public ActionResult ContentByHeading(int id)
         {
-            var contentvalues = contentManager.GetAllByHeadingId(id);
+            var contentvalues = _contentService.GetAllByHeadingId(id);
             return View(contentvalues);
         }
     }

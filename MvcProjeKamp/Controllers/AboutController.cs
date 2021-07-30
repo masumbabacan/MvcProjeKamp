@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.EntityFramework;
 using Entites.Concrete;
 using System;
@@ -13,11 +14,18 @@ namespace MvcProjeKamp.Controllers
     {
         // GET: About
 
-        AboutManager aboutManager = new AboutManager(new EfAboutDal());
+        //AboutManager aboutManager = new AboutManager(new EfAboutDal());
+
+       IAboutService _aboutService;
+
+        public AboutController(IAboutService aboutService)
+        {
+            _aboutService = aboutService;
+        }
 
         public ActionResult Index()
         {
-            var aboutValues = aboutManager.GetAll();
+            var aboutValues = _aboutService.GetAll();
             return View(aboutValues);
         }
 
@@ -30,7 +38,7 @@ namespace MvcProjeKamp.Controllers
         [HttpPost]
         public ActionResult Add(About about)
         {
-            aboutManager.Add(about);
+            _aboutService.Add(about);
             return RedirectToAction("Index");
         }
 
@@ -41,7 +49,7 @@ namespace MvcProjeKamp.Controllers
 
         public ActionResult Delete(int id)
         {
-            var aboutValue = aboutManager.GetById(id);
+            var aboutValue = _aboutService.GetById(id);
             if (aboutValue.Status == true)
             {
                 aboutValue.Status = false;
@@ -50,7 +58,7 @@ namespace MvcProjeKamp.Controllers
             {
                 aboutValue.Status = true;
             }
-            aboutManager.Delete(aboutValue);
+            _aboutService.Delete(aboutValue);
             return RedirectToAction("Index");
         }
     }

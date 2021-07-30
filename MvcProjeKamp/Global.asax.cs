@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using MvcProjeKamp.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +12,8 @@ namespace MvcProjeKamp
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        public object Host { get; private set; }
+
         protected void Application_Start()
         {
             GlobalFilters.Filters.Add(new AuthorizeAttribute());
@@ -17,6 +21,9 @@ namespace MvcProjeKamp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            
+            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
         }
     }
 }

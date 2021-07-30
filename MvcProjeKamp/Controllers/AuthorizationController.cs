@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.EntityFramework;
 using Entites.Concrete;
 using System;
@@ -11,11 +12,21 @@ namespace MvcProjeKamp.Controllers
 {
     public class AuthorizationController : Controller
     {
-        AdminManager adminManager = new AdminManager(new EfAdminDal());
+        //AdminManager adminManager = new AdminManager(new EfAdminDal());
+
+        IAdminService _adminService;
+
+        public AuthorizationController(IAdminService adminService)
+        {
+            _adminService = adminService;
+        }
+
+
+
         // GET: Authorization
         public ActionResult Index()
         {
-            var adminValues = adminManager.GetAll();
+            var adminValues = _adminService.GetAll();
             return View(adminValues);
         }
 
@@ -28,7 +39,7 @@ namespace MvcProjeKamp.Controllers
         [HttpPost]
         public ActionResult AddAdmin(Admin admin)
         {
-            adminManager.Add(admin);
+            _adminService.Add(admin);
             return RedirectToAction("Index");
         }
 
@@ -36,14 +47,14 @@ namespace MvcProjeKamp.Controllers
         [HttpGet]
         public ActionResult EditAdmin(int id)
         {
-            var adminValue = adminManager.GetById(id);
+            var adminValue = _adminService.GetById(id);
             return View(adminValue);
         }
 
         [HttpPost]
         public ActionResult EditAdmin(Admin admin)
         {
-            adminManager.Update(admin);
+            _adminService.Update(admin);
             return RedirectToAction("Index");
         }
     }

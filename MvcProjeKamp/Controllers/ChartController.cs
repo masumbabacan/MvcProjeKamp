@@ -12,7 +12,7 @@ namespace MvcProjeKamp.Controllers
 {
     public class ChartController : Controller
     {
-        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+        // CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
         // GET: Chart
         public ActionResult Index()
         {

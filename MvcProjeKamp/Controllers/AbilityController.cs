@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,18 @@ namespace MvcProjeKamp.Controllers
 {
     public class AbilityController : Controller
     {
-        // GET: Ability
-        AbilityManager abilityManager = new AbilityManager(new EfAbilityDal());
+       // AbilityManager abilityManager = new AbilityManager(new EfAbilityDal());
+
+        IAbilityService _abilityService;
+
+        public AbilityController(IAbilityService abilityService)
+        {
+            _abilityService = abilityService;
+        }
+
         public ActionResult Index()
         {
-            var abilityValues = abilityManager.GetAll();
+            var abilityValues = _abilityService.GetAll();
             return View(abilityValues);
         }
     }

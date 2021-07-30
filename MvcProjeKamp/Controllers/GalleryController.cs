@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.EntityFramework;
 using Entites.Concrete;
 using System;
@@ -12,11 +13,18 @@ namespace MvcProjeKamp.Controllers
     public class GalleryController : Controller
     {
         // GET: Gallery
-        ImageFileManager imageFileManager = new ImageFileManager(new EfImageFileDal());
+        //ImageFileManager imageFileManager = new ImageFileManager(new EfImageFileDal());
+        IImageFileService _imageFileService;
+
+        public GalleryController(IImageFileService imageFileService)
+        {
+            _imageFileService = imageFileService;
+        }
+
         [Authorize]
         public ActionResult Index()
         {
-            var files = imageFileManager.GetAll();
+            var files = _imageFileService.GetAll();
             return View(files);
         }
 
@@ -29,7 +37,7 @@ namespace MvcProjeKamp.Controllers
         [HttpPost]
         public ActionResult Add(ImageFile ımageFile)
         {
-            imageFileManager.Add(ımageFile);
+            _imageFileService.Add(ımageFile);
             return RedirectToAction("Index");
         }
 

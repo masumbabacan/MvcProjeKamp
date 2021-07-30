@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using Business.ValidationRules.FluentValidation;
 using DataAccess.EntityFramework;
 using Entites.Concrete;
@@ -13,13 +14,18 @@ namespace MvcProjeKamp.Controllers
 {
     public class AdminCategoryController : Controller
     {
-        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-        
-        
-       [Authorize(Roles = "A")]
+        //CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+        ICategoryService _categoryService;
+
+        public AdminCategoryController(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
+
+        [Authorize(Roles = "A")]
         public ActionResult Index()
         {
-            var categoryvalues = categoryManager.GetAll();
+            var categoryvalues = _categoryService.GetAll();
             return View(categoryvalues);
         }
 
@@ -36,7 +42,7 @@ namespace MvcProjeKamp.Controllers
             ValidationResult result = validations.Validate(category);
             if (result.IsValid)
             {
-                categoryManager.Add(category);
+                _categoryService.Add(category);
                 return RedirectToAction("Index");
             }
             else
@@ -52,22 +58,22 @@ namespace MvcProjeKamp.Controllers
 
         public ActionResult Delete(int id)
         {
-            var categoryvalue = categoryManager.GetById(id);
-            categoryManager.Delete(categoryvalue);
+            var categoryvalue = _categoryService.GetById(id);
+            _categoryService.Delete(categoryvalue);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Update(int id)
         {
-            var categoryvalue = categoryManager.GetById(id);
+            var categoryvalue = _categoryService.GetById(id);
             return View(categoryvalue);
         }
 
         [HttpPost]
         public ActionResult Update(Category category)
         {
-            categoryManager.Update(category);
+            _categoryService.Update(category);
             return RedirectToAction("Index");
         }
     }

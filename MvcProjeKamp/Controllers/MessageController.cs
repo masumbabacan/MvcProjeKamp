@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using Business.ValidationRules.FluentValidation;
 using DataAccess.EntityFramework;
 using Entites.Concrete;
@@ -14,44 +15,51 @@ namespace MvcProjeKamp.Controllers
     public class MessageController : Controller
     {
         // GET: Message
-        MessageManager messageManager = new MessageManager(new EfMessageDal());
+        //MessageManager messageManager = new MessageManager(new EfMessageDal());
         MessageValidator validationRules = new MessageValidator();
+
+        IMessageService _messageService;
+
+        public MessageController(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
 
         [Authorize]
         public ActionResult Inbox(string p)
         {
-            var messageList = messageManager.GetAllInbox(p);
+            var messageList = _messageService.GetAllInbox(p);
             return View(messageList);
         }
 
         public ActionResult Sendbox(string p)
         {
-            var messageList = messageManager.GetAllSendbox(p);
+            var messageList = _messageService.GetAllSendbox(p);
             return View(messageList);
         }
 
         public ActionResult UnreadMessages(string p)
         {
-            var messageList = messageManager.GetAllUnReadMessageList(p);
+            var messageList = _messageService.GetAllUnReadMessageList(p);
             return View(messageList);
         }
 
         public ActionResult DeletedMessageList(string p)
         {
-            var messageList = messageManager.DeletedMessageList(p);
+            var messageList = _messageService.DeletedMessageList(p);
             return View(messageList);
         }
 
 
         public ActionResult GetInBoxMessageDetails(int id)
         {
-            var values = messageManager.GetById(id);
+            var values = _messageService.GetById(id);
             return View(values);
         }
 
         public ActionResult GetSendBoxMessageDetails(int id)
         {
-            var values = messageManager.GetById(id);
+            var values = _messageService.GetById(id);
             return View(values);
         }
 
@@ -68,7 +76,7 @@ namespace MvcProjeKamp.Controllers
             if (results.IsValid)
             {
                 message.MessageDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                messageManager.Add(message);
+                _messageService.Add(message);
                 return RedirectToAction("SendBox");
             }
             else
@@ -84,7 +92,7 @@ namespace MvcProjeKamp.Controllers
         public ActionResult ReadMessage(int id)
         {
 
-            var messageValue = messageManager.GetById(id);
+            var messageValue = _messageService.GetById(id);
             if (messageValue.MessageRead == true)
             {
                 messageValue.MessageRead = false;
@@ -93,14 +101,14 @@ namespace MvcProjeKamp.Controllers
             {
                 messageValue.MessageRead = true;
             }
-            messageManager.Update(messageValue);
+            _messageService.Update(messageValue);
             return RedirectToAction("Inbox");
         }
 
         public ActionResult UnReadMessage(int id)
         {
 
-            var messageValue = messageManager.GetById(id);
+            var messageValue = _messageService.GetById(id);
             if (messageValue.MessageRead == true)
             {
                 messageValue.MessageRead = false;
@@ -109,14 +117,14 @@ namespace MvcProjeKamp.Controllers
             {
                 messageValue.MessageRead = true;
             }
-            messageManager.Update(messageValue);
+            _messageService.Update(messageValue);
             return RedirectToAction("UnreadMessages");
         }
 
         public ActionResult DeleteMessage(int id)
         {
 
-            var messageValue = messageManager.GetById(id);
+            var messageValue = _messageService.GetById(id);
             if (messageValue.Status == true)
             {
                 messageValue.Status = false;
@@ -125,14 +133,14 @@ namespace MvcProjeKamp.Controllers
             {
                 messageValue.Status = true;
             }
-            messageManager.Update(messageValue);
+            _messageService.Update(messageValue);
             return RedirectToAction("Inbox");
         }
 
         public ActionResult DeletedMessage(int id)
         {
 
-            var messageValue = messageManager.GetById(id);
+            var messageValue = _messageService.GetById(id);
             if (messageValue.Status == true)
             {
                 messageValue.Status = false;
@@ -141,7 +149,7 @@ namespace MvcProjeKamp.Controllers
             {
                 messageValue.Status = true;
             }
-            messageManager.Update(messageValue);
+            _messageService.Update(messageValue);
             return RedirectToAction("DeletedMessageList");
         }
     }

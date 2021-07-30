@@ -1,27 +1,63 @@
 ﻿@model Entites.Concrete.Category
-
-
 @{
     ViewBag.Title = "Add";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Yeni kategori ekleme sayfası</h1>
-<br />
-@using (Html.BeginForm("Add", "AdminCategory", FormMethod.Post))
-{
-
-
-<div class="form-group">
-    @Html.Label("Kategori Adı")
-    @Html.TextBoxFor(c => c.CategoryName, new { @class = "form-control" })
-    @Html.ValidationMessageFor(c => c.CategoryName)
+<html>
+<head>
+    <link href="~/AdminLTE-3.0.4/form.css" rel="stylesheet" />
+</head>
+<body>
     <br />
-    @Html.Label("Açıklama yazınız")
-    @Html.TextAreaFor(c => c.CategoryDescription, new { @class = "form-control" })
-    @Html.ValidationMessageFor(c => c.CategoryDescription)
     <br />
-    <button class="btn btn-info">Kaydet</button>
-</div>
+    <br />
+    <br />
+    @using (Html.BeginForm("Add", "AdminCategory", FormMethod.Post, new { @class = "elegant-aero" }))
+    {
+        <form action="" method="post" class="elegant-aero">
+            <h1>
+                Kategori Ekle
+                <span>Kategori eklemek için alanları eksiksiz doldurunuz.</span>
+            </h1>
+            <label>
+                <span>Kategori Adı:</span>
+                <input id="name" type="text" name="CategoryName" placeholder="Kategori adını giriniz" />
+            </label>
 
-}
+            <label>
+                <span>Açıklama :</span>
+                <input id="name" type="text" name="CategoryDescription" placeholder="Açıklama giriniz" />
+            </label>
+
+            @*<label>
+                    <span>Message :</span>
+                    <textarea id="message" name="message" placeholder="Your Message to Us"></textarea>
+                </label>
+                <label>
+                    <span>Subject :</span><select name="selection">
+                        <option value="Job Inquiry">Job Inquiry</option>
+                        <option value="General Question">General Question</option>
+                    </select>
+                </label>*@
+            <label>
+                <span> </span>
+                <button class="btn btn-info">Kaydet</button>
+            </label>
+        </form>
+    }
+</body>
+</html>
+
+@*<div class="form-group">
+        @Html.Label("Kategori Adı")
+        @Html.TextBoxFor(c => c.CategoryName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.CategoryName)
+        <br />
+        @Html.Label("Açıklama yazınız")
+        @Html.TextAreaFor(c => c.CategoryDescription, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.CategoryDescription)
+        <br />
+        <button class="btn btn-info">Kaydet</button>
+    </div>*@
+
