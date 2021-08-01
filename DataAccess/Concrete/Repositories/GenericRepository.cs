@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.Repositories
         }
 
         public void Insert(T entity)
-        {
+        {  
             var addedEntity = c.Entry(entity);
             addedEntity.State = EntityState.Added;
             c.SaveChanges();
