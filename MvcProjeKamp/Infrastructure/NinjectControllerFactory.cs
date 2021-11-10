@@ -37,7 +37,7 @@ namespace MvcProjeKamp.Infrastructure
             _ninjectKernel.Bind<IMessageService>().To<MessageManager>().WithConstructorArgument("messageDal", new EfMessageDal());
             _ninjectKernel.Bind<IWriterService>().To<WriterManager>().WithConstructorArgument("writerDal", new EfWriterDal());
 
-            _ninjectKernel.Intercept(p => (true)).With(new LoggingInterceptor());
+           // _ninjectKernel.Intercept(p => (true)).With(new LoggingInterceptor());
         }
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {

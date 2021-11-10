@@ -62,22 +62,6 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            if (item.Category.CategoryName == "Film")
-                            {
-                                color = "badge badge-warning";
-                            }
-                            else if (item.Category.CategoryName == "Dizi")
-                            {
-                                color = "badge badge-success";
-                            }
-                            else if (item.Category.CategoryName == "Yazılım")
-                            {
-                                color = "badge badge-info";
-                            }
-                            else
-                            {
-                                color = "badge badge-dark";
-                            }
                             <tr>
                                 <td>
                                     @item.HeadingId

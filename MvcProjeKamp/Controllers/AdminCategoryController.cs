@@ -22,7 +22,7 @@ namespace MvcProjeKamp.Controllers
             _categoryService = categoryService;
         }
 
-        [Authorize(Roles = "A")]
+        [Authorize]
         public ActionResult Index()
         {
             var categoryvalues = _categoryService.GetAll();
